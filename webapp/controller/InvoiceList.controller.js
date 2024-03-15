@@ -8,7 +8,7 @@ sap.ui.define([
 	"use strict";
 
 	return Controller.extend("ui5.walkthrough.controller.InvoiceList", {
-		formatter: formatter, 
+		formatter: formatter,
 
 		onInit() {
 			const oViewModel = new JSONModel({
@@ -29,6 +29,14 @@ sap.ui.define([
 			const oList = this.byId("invoiceList");
 			const oBinding = oList.getBinding("items");
 			oBinding.filter(aFilter);
+		},
+
+		onPress(oEvent) {
+			const oItem = oEvent.getSource();
+			const oRouter = this.getOwnerComponent().getRouter();
+			oRouter.navTo("detail", {
+				invoicePath: window.encodeURIComponent(oItem.getBindingContext("invoice").getPath().substr(1))
+			});
 		}
 	});
 });
